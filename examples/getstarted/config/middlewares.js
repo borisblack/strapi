@@ -3,13 +3,24 @@
 const responseHandlers = require('./src/response-handlers');
 
 module.exports = [
+  'strapi::logger',
   'strapi::errors',
-  'strapi::security',
+  {
+    name: 'strapi::security',
+    config: {
+      contentSecurityPolicy: {
+        useDefaults: true,
+        directives: {
+          'frame-src': ["'self'"], // URLs that will be loaded in an iframe (e.g. Content Preview)
+        },
+      },
+    },
+  },
   'strapi::cors',
   'strapi::poweredBy',
-  'strapi::logger',
   'strapi::query',
   'strapi::body',
+  'strapi::session',
   // 'strapi::compression',
   // 'strapi::ip',
   {
